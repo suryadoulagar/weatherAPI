@@ -1,0 +1,33 @@
+body {
+    background: #485460;
+    letter-spacing: 0.2em;
+    font-size: 0.8em;
+}
+
+.container {
+    max-width: 400px;
+}
+input[type="text"] {
+    background: transparent;
+    border-radius: 1em;
+    border-color: #1e272e;
+}
+
+input[type="text"]:focus {
+    background: transparent;
+    border-color: azure;
+    color:#fff;
+}
+
+.boxer {
+    background: #485460;
+    border-color: #485460;
+}
+
+.icon {
+    position: relative;
+    top: -50px;
+    border-radius: 50%;
+    width: 100px;
+    margin-bottom: -50px;
+}
