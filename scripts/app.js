@@ -1,5 +1,5 @@
-Host: "dataservice.accuweather.com"
-Origin: "http://127.0.0.1:5500/index.html"
+Host: "dataservice.accuweather.com";
+Origin: "http://127.0.0.1:5500/index.html";
 
 const cityForm = document.querySelector("form");
 const card = document.querySelector(".card");
@@ -13,9 +13,7 @@ const updateUI = (data) => {
 
   //destructuring te constants
 
-  const { cityDets, weather} = data;
-
-
+  const { cityDets, weather } = data;
   // update template
   details.innerHTML = `
     <h5 class="my-3">${cityDets.EnglishName}</h5>
@@ -26,25 +24,25 @@ const updateUI = (data) => {
     </div>
     `;
 
-    //update day and night
+  //update day and night
 
-    const iconSrc = `img/icons/${weather.WeatherIcon}.svg`;
-    icon.setAttribute("src", iconSrc);
+  const iconSrc = `img/icons/${weather.WeatherIcon}.svg`;
+  icon.setAttribute("src", iconSrc);
 
-    let timeSrc = weather.IsDayTime ? "img/day.svg" : "img/night.svg";
-    // if(weather.IsDayTime) {
-    //   timeSrc = "img/day.svg";
-    // } else {
-    //   timeSrc = "img/night.svg";
-    // }
-    time.setAttribute("src", timeSrc);
+  let timeSrc = weather.IsDayTime ? "img/day.svg" : "img/night.svg";
+  // if(weather.IsDayTime) {
+  //   timeSrc = "img/day.svg";
+  // } else {
+  //   timeSrc = "img/night.svg";
+  // }
+  time.setAttribute("src", timeSrc);
 
   if (card.classList.contains("d-none")) {
     card.classList.remove("d-none");
   }
 };
 
-const updateCity = async (city) => {
+  const updateCity = async (city) => {
   const cityDets = await getCity(city);
   const weather = await getWeather(cityDets.Key);
 
@@ -54,6 +52,7 @@ const updateCity = async (city) => {
 cityForm.addEventListener("submit", (e) => {
   //prevent default refreshing of the page
   e.preventDefault();
+
   // Get city value
   const city = cityForm.city.value.trim();
   cityForm.reset();
@@ -62,4 +61,13 @@ cityForm.addEventListener("submit", (e) => {
   updateCity(city)
     .then((data) => updateUI(data))
     .catch((err) => console.log(err));
+
+    //setting up local storage
+    localStorage.setItem("location", city);
 });
+
+if(localStorage.getItem("location")) {
+  updateCity(localStorage.getItem("location"))
+  .then(data => updateUI(data))
+  .catch(err => console.log(err));
+}
